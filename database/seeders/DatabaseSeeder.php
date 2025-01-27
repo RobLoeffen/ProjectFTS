@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
     {
 
         User::factory()->create([
-            'name' => 'Rob Loeffen',
-            'email' => 'rob@test.com',
+            'name' => 'Eigenaar ToetToet',
+            'email' => 'employee@test.com',
             'email_verified_at' => now(),
             'password' => Hash::make('Standaard'),
             'remember_token' => Str::random(10),
@@ -27,8 +27,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::factory()->create([
-            'name' => 'Rob Loeffenn',
-            'email' => 'rob@test1.com',
+            'name' => 'Bart',
+            'email' => 'bart@test.com',
             'email_verified_at' => now(),
             'password' => Hash::make('Standaard'),
             'remember_token' => Str::random(10),
