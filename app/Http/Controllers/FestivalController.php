@@ -39,9 +39,14 @@ class FestivalController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|max:1000',
+        ]);
+
         $festival= Festival::create([
-            'title' => $request->input('title'),
-            'description' => $request->input('description'),
+            'title' => $validated['title'],
+            'description' => $validated['description'],
         ]);
 
         $numerOfBuses = rand(1,3);
@@ -79,9 +84,14 @@ class FestivalController extends Controller
      */
     public function update(Request $request, Festival $Festival)
     {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|max:1000',
+        ]);
+
         $Festival->update([
-           'title' => $request->input('title'),
-            'description' => $request->input('description'),
+           'title' => $validated['title'],
+            'description' => $validated['description'],
         ]);
 
         return redirect()->route('Festivals.index');

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('festivals', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('description');
+            $table->string('description', 1000);
             $table->timestamps();
         });
     }

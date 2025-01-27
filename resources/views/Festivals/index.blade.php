@@ -22,7 +22,7 @@
                         <table class="w-full">
                             <thead>
                             <tr class="bg-blue-800 text-white">
-                                <th class="text-left py-3 px-4 font-semibold">Route Title</th>
+                                <th class="text-left py-3 px-4 font-semibold">Festival Title</th>
                                 <th class="w-48 px-4"></th>
                             </tr>
                             </thead>
