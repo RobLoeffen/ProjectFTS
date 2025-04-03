@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('buses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('festival_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('festival_id')->nullable()->constrained()->cascadeOnDelete();
             $table->string('departure_location');
             $table->time('arrival_time');
             $table->time('departure_time');

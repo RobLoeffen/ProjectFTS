@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Bus;
 use App\Models\Festival;
+use App\Models\Bus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
@@ -31,7 +31,9 @@ class FestivalController extends Controller
      */
     public function create()
     {
-        return view('Festivals.create');
+        // Get all available buses that aren't assigned to a festival yet
+        $availableBuses = Bus::whereNull('festival_id')->get();
+        return view('Festivals.create', compact('availableBuses'));
     }
 
     /**
@@ -42,21 +44,25 @@ class FestivalController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|max:1000',
+            'buses' => 'nullable|array',
+            'buses.*' => 'exists:buses,id',
         ]);
 
-        $festival= Festival::create([
+        $festival = Festival::create([
             'title' => $validated['title'],
             'description' => $validated['description'],
         ]);
 
-        $numerOfBuses = rand(1,3);
-
-        for ($i = 0; $i < $numerOfBuses; $i++) {
-            Bus::factory()->create([
-                'festival_id' => $festival->id,
-            ]);
+        // Assign selected buses to the festival
+        if ($request->has('buses')) {
+            foreach ($request->buses as $busId) {
+                $bus = Bus::find($busId);
+                if ($bus) {
+                    $bus->festival_id = $festival->id;
+                    $bus->save();
+                }
+            }
         }
-
 
         return redirect()->route('Festivals.index');
     }
@@ -76,7 +82,13 @@ class FestivalController extends Controller
      */
     public function edit(Festival $Festival)
     {
-        return view('Festivals.edit', compact('Festival'));
+        // Get buses already assigned to this festival
+        $assignedBuses = $Festival->buses;
+
+        // Get all available buses that aren't assigned to any festival
+        $availableBuses = Bus::whereNull('festival_id')->get();
+
+        return view('Festivals.edit', compact('Festival', 'assignedBuses', 'availableBuses'));
     }
 
     /**
@@ -87,12 +99,29 @@ class FestivalController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|max:1000',
+            'buses' => 'nullable|array',
+            'buses.*' => 'exists:buses,id',
         ]);
 
         $Festival->update([
-           'title' => $validated['title'],
+            'title' => $validated['title'],
             'description' => $validated['description'],
         ]);
+
+        // Handle bus assignments
+        // First, unassign all buses currently assigned to this festival
+        Bus::where('festival_id', $Festival->id)->update(['festival_id' => null]);
+
+        // Then assign the selected buses to this festival
+        if ($request->has('buses')) {
+            foreach ($request->buses as $busId) {
+                $bus = Bus::find($busId);
+                if ($bus) {
+                    $bus->festival_id = $Festival->id;
+                    $bus->save();
+                }
+            }
+        }
 
         return redirect()->route('Festivals.index');
     }
@@ -102,6 +131,9 @@ class FestivalController extends Controller
      */
     public function destroy(Festival $Festival)
     {
+        // Unassign all buses from this festival before deleting
+        Bus::where('festival_id', $Festival->id)->update(['festival_id' => null]);
+
         $Festival->delete();
 
         return redirect()->route('Festivals.index');
