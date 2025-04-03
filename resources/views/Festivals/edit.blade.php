@@ -39,6 +39,78 @@
                             >{{ $Festival->description }}</textarea>
                         </div>
 
+                        <!-- Bus Management Section -->
+                        <div class="space-y-4 mt-6">
+                            <h3 class="text-lg font-medium text-blue-700 border-b border-blue-200 pb-2">Manage Festival Buses</h3>
+
+                            <!-- Assigned Buses Section -->
+                            <div class="bg-blue-50 p-4 rounded-md border border-blue-200">
+                                <h4 class="font-medium text-blue-700 mb-3">Currently Assigned Buses</h4>
+
+                                @if(count($assignedBuses) > 0)
+                                    <div class="space-y-2">
+                                        @foreach($assignedBuses as $bus)
+                                            <div class="flex items-start space-x-3">
+                                                <input
+                                                    type="checkbox"
+                                                    name="buses[]"
+                                                    value="{{ $bus->id }}"
+                                                    id="assigned-bus-{{ $bus->id }}"
+                                                    checked
+                                                    class="mt-1 rounded border-blue-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                                >
+                                                <label for="assigned-bus-{{ $bus->id }}" class="text-sm">
+                                                    <span class="font-medium">{{ $bus->departure_location }}</span>
+                                                    <span class="block text-xs text-gray-500">
+                                                        Departure: {{ $bus->departure_time }} |
+                                                        Arrival: {{ $bus->arrival_time }} |
+                                                        Price: €{{ $bus->price }}
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @else
+                                    <p class="text-sm text-gray-500 italic">No buses currently assigned to this festival.</p>
+                                @endif
+                            </div>
+
+                            <!-- Available Buses Section -->
+                            <div class="bg-gray-50 p-4 rounded-md border border-gray-200">
+                                <h4 class="font-medium text-blue-700 mb-3">Available Buses</h4>
+
+                                @if(count($availableBuses) > 0)
+                                    <div class="space-y-2">
+                                        @foreach($availableBuses as $bus)
+                                            <div class="flex items-start space-x-3">
+                                                <input
+                                                    type="checkbox"
+                                                    name="buses[]"
+                                                    value="{{ $bus->id }}"
+                                                    id="available-bus-{{ $bus->id }}"
+                                                    class="mt-1 rounded border-blue-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                                >
+                                                <label for="available-bus-{{ $bus->id }}" class="text-sm">
+                                                    <span class="font-medium">{{ $bus->departure_location }}</span>
+                                                    <span class="block text-xs text-gray-500">
+                                                        Departure: {{ $bus->departure_time }} |
+                                                        Arrival: {{ $bus->arrival_time }} |
+                                                        Price: €{{ $bus->price }}
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @else
+                                    <p class="text-sm text-gray-500 italic">No available buses to assign.</p>
+                                @endif
+                            </div>
+
+                            <p class="text-xs text-gray-500 italic">
+                                * Uncheck buses to remove them from this festival. Check available buses to assign them.
+                            </p>
+                        </div>
+
                         <div class="flex justify-end mt-6 space-x-3">
                             <a href="{{ route('Festivals.index') }}"
                                class="inline-flex items-center px-4 py-2 bg-white border border-blue-300 rounded-md font-semibold text-sm text-blue-700 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition">

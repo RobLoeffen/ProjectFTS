@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::factory(10)->create();
+        Bus::factory()->count(10)->create();
         Festival::factory()
             ->count(10)
             ->create()
