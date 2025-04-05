@@ -1,5 +1,10 @@
 Welkom bij de applicatie voor busbedrijf ToetToet!
 
+**Belangrijk! (Om te zorgen dat elke test individueel goed runt en consisten zullen slagen wordt de database na elke test
+helemaal geleegd. Dit zorgt ervoor dat de database na de testen niet vol zit met onnodige test data en testen niet
+kunnen falen door residu test data. Om deze reden zul je na de migration nogmaals de database moeten migraten met data
+door de --seed command.)**
+
 Setup guide:
 
 1. Download de zip file!
