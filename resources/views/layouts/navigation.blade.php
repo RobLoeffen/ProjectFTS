@@ -80,11 +80,11 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1 bg-blue-800">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')"
+            <x-responsive-nav-link :href="route('dashboard')"
                                    class="text-white hover:bg-blue-700">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link href="/festivals" :active="request()->is('festivals')"
+            <x-responsive-nav-link href="/festivals"
                                    class="text-white hover:bg-blue-700">
                 {{__('Festivals')}}
             </x-responsive-nav-link>

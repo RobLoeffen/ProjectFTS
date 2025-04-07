@@ -81,15 +81,15 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1 bg-blue-800">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')"
+            <x-responsive-nav-link :href="route('dashboard')"
                                    class="text-white hover:bg-blue-700">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('Festivals.index')" :active="request()->routeIs('Festivals.index')"
+            <x-responsive-nav-link :href="route('Festivals.index')"
                                    class="text-white hover:bg-blue-700">
                 {{ __('Festivals') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('CustomerList.index')" :active="request()->routeIs('CustomerList.index')"
+            <x-responsive-nav-link :href="route('CustomerList.index')"
                                    class="text-white hover:bg-blue-700">
                 {{ __('Customer list') }}
             </x-responsive-nav-link>
